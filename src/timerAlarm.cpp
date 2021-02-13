@@ -1,11 +1,12 @@
 #include "timerAlarm.h"
-#include <adri_tools.h>
+
+#include <adri_tools_v2.h>
 
 #define DEBUG
 
 timerAlarm * timerAlarmPtr;
 
-alarm_base * alarm_base_array[20];
+alarm_base * alarm_base_array[3];
 
 fs(ta_str_period,		"period");
 fs(ta_str_createTime,	"createTime");
@@ -61,6 +62,7 @@ String timerAlarm::period_to_string(dt_alarmPeriod mod) {
 		case dtWeeklyEndAlarm: 		ret = "dtWeeklyEndAlarm";		break;
 		case dtWeeklyRepeatAlarm:	ret = "dtWeeklyRepeat";			break;
 		case dtDailyEndAlarm:		ret = "dtDailyEndAlarm";		break;
+		default:break;
 	}
 	return ret;
 }

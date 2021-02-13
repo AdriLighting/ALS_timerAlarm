@@ -1,11 +1,10 @@
 alarm_daily::alarm_daily(int _pos) : alarm_base() {
-	fsprintf("\n[alarm_daily::alarm_daily]\n");
+	ADRI_LOG(-1, 2, 2, "Constructor", "");
 	objPos = _pos;
 }
 alarm_daily::~alarm_daily(){
-	fsprintf("\n[alarm_daily::destructor]\n");
+	ADRI_LOG(-1, 2, 2, "Destructor", "");
 	delete timerUpdated;
-
 }
 void alarm_daily::setup(
 		String _name, 
@@ -13,7 +12,7 @@ void alarm_daily::setup(
 		OnTick_t _onTickHandler, 
 		OnTick_t _endTickHandler
 	) {
-	fsprintf("\n[alarm_daily::setup]\n");
+	ADRI_LOG(-1, 2, 2, "setup", "");
 	createTime     	= now();
 	isEnabled 		= true;
 	name 			= _name;
@@ -39,7 +38,8 @@ int alarm_daily::updateNextTrigger(){
 	if (dtIsAlarm(period) && nextTrigger <= time) {
 		if ((value + previousMidnight(now())) <= time) {
 			#ifdef DEBUG
-				Serial.printf("\n\t[1 alarm_daily] [%s <= %s] %s -> upd: time has passed then set for tomorrow.\n", 
+				ADRI_LOG(-1, 2, 2, "updateNextTrigger", "");
+				fsprintf("\t[1 alarm_daily] [%s <= %s] %s -> upd: time has passed then set for tomorrow.\n", 
 					timerAlarmPtr->timertoString(value + previousMidnight(now())).c_str(), timerAlarmPtr->timertoString(time).c_str(), timerAlarmPtr->timertoString(value + nextMidnight(time)).c_str());						
 			#endif
 			nextTrigger = value + nextMidnight(time);
@@ -47,7 +47,8 @@ int alarm_daily::updateNextTrigger(){
 		}	
 		else {
 			#ifdef DEBUG
-				Serial.printf("\n\t[0 alarm_daily] [%s >= %s] %s -> upd: set the date to today and add the time given in value\n", 
+			ADRI_LOG(-1, 2, 2, "updateNextTrigger", "");
+				fsprintf("\t[0 alarm_daily] [%s >= %s] %s -> upd: set the date to today and add the time given in value\n", 
 					timerAlarmPtr->timertoString(value + previousMidnight(now())).c_str(), timerAlarmPtr->timertoString(time).c_str(), timerAlarmPtr->timertoString(value + previousMidnight(time)).c_str());
 			#endif					
 			nextTrigger = value + previousMidnight(time);
@@ -62,7 +63,7 @@ void alarm_daily::loop(){
 
 	if (timerUpdated->loop_stop()) {
 		isUpdated = true;
-		fsprintf("\n[alarm_weeklyEnd::loop] [isUpdated: %d]\n", isUpdated);
+		ADRI_LOGV(-1, 2, 2,  isUpdated, "", "");
 	}
 
 	if ( (now() >= nextTrigger)) {
@@ -76,7 +77,8 @@ void alarm_daily::loop(){
 }
 void alarm_daily::print(){
 	if (!isUpdated) return;
-	fsprintf("\n[alarm_daily::print]\n");
+
+	ADRI_LOG(-1, 0, 2, "print", "");
 	String s_period 		= timerAlarmPtr->period_to_string(period);
 	String s_startTime 		= timerAlarmPtr->timertoString(startTime);
 	String s_createTime		= timerAlarmPtr->timertoString(createTime);	
@@ -96,7 +98,7 @@ void alarm_daily::print(){
 	// fsprintf("[%-15s][%s]\n", fsget(ta_str_o_endValue).c_str(),		s_o_endValue.c_str());
 	fsprintf("[%-15s][%s]\n", fsget(ta_str_nextTrigger).c_str(),	s_nextTrigger.c_str());
 	fsprintf("[%-15s][%s - %d]\n", fsget(ta_str_triggerDay).c_str(), triggerDay.c_str(), day(nextTrigger));
-
+	ADRI_LOG(-1, 1, 2, "print", "");
 }
 
 void alarm_daily::lapse_toString		(String & ret) {ret = String("-1");}

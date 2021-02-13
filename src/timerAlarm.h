@@ -42,6 +42,14 @@
 		virtual void 	loop();
 		virtual void 	print();
 		virtual void 	desactivate();
+
+		virtual void  	setup(
+							String _name, 
+							time_t _value, 
+							OnTick_t _onTickHandler, 
+							OnTick_t _endTickHandler
+						){}	
+
 		virtual void  	setup(
 							String _name, 
 							time_t _value, 
@@ -49,27 +57,23 @@
 							OnTick_t _onTickHandler, 
 							timeDayOfWeek_t _dayOfWeek, 
 							OnTick_t _endTickHandler
-						){};						
+						){}					
 		virtual void  	setup(
 							String _name, 
 							time_t _value, 
 							OnTick_t _onTickHandler, 
 							timeDayOfWeek_t _dayOfWeek, 
 							OnTick_t _endTickHandler
-						){};	
+						){}
 		virtual void  	setup(
 							String _name, 
 							time_t _value, 
 							time_t _endValue, 
 							OnTick_t _onTickHandler, 
 							OnTick_t _endTickHandler
-						){};			
-		virtual void  	setup(
-							String _name, 
-							time_t _value, 
-							OnTick_t _onTickHandler, 
-							OnTick_t _endTickHandler
-						){};									
+						){}		
+
+
 		virtual int		updateNextTrigger();
 		virtual	void 	lapse_toString		(String & ret);
 		virtual	void 	repeat_toString		(String & ret);
@@ -113,7 +117,7 @@
 			int 	updateNextTrigger();
 			void 	loop 			();
 			void 	print 			();	
-			void 	desactivate 	(){delete this;}			
+			void 	desactivate 	(){}			
 			void 	edit 			(time_t _value);	
 			void 	lapse_toString		(String & ret);
 			void 	repeat_toString		(String & ret);
